@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArecaNut Shell and Products</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>ArecaNut Shell and Products</h1>
+        <h3>By Idea Igniters</h3>
+        <nav>
+            <ul>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#cart">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="#account">Account</a></li>
+                <li><a href="#search">Search</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="search">
+            <h2>Search Products</h2>
+            <input type="text" id="search-bar" placeholder="Search for products..." oninput="filterProducts()">
+        </section>
+
+        <section id="products">
+            <h2>Arecanut Shell and Product Catalog</h2>
+            <div id="product-list">
+                <!-- Products will be dynamically added here -->
+            </div>
+            <button onclick="showAddProductForm()">Add New Product</button>
+            <div id="add-product-form" style="display:none;">
+                <h3>Add New Product</h3>
+                <input type="text" id="product-name" placeholder="Product Name">
+                <input type="number" id="product-price" placeholder="Product Price">
+                <input type="text" id="product-image" placeholder="Image URL">
+                <input type="email" id="product-email" placeholder="Your Email" required>
+                <button onclick="addNewProduct()">Add Product</button>
+            </div>
+        </section>
+
+        <section id="cart">
+            <h2>Your Cart</h2>
+            <ul id="cart-items"></ul>
+            <p id="total-price">Total Price: ₹0</p>
+            <button onclick="checkout()">Checkout</button>
+        </section>
+
+        <section id="account">
+            <h2>User Account</h2>
+            <div id="account-info" style="display: none;">
+                <p id="username"></p>
+                <button onclick="logout()">Logout</button>
+            </div>
+            <div id="login-register">
+                <button onclick="login()">Login</button>
+                <button onclick="register()">Register</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Areca Nut Shell Products. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

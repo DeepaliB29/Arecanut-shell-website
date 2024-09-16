@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Checkout</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Your Cart</h2>
+            <ul id="checkout-cart-items"></ul>
+            <p id="checkout-total-price">Total Price: $0</p>
+
+            <h3>Enter Your Email</h3>
+            <input type="email" id="customer-email" placeholder="Your Email" required>
+            <button onclick="confirmOrder()">Confirm Order</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Areca Nut Shell Products. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const products = [
+            { id: 1, name: 'Areca Nut Shell Coasters', price: 10, image: 'coasters.jpg', email: 'seller1@example.com' },
+            { id: 2, name: 'Areca Nut Shell Bowls', price: 20, image: 'bowls.jpg', email: 'seller2@example.com' }
+        ];
+
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const checkoutCartItems = document.getElementById('checkout-cart-items');
+            const checkoutTotalPriceElem = document.getElementById('checkout-total-price');
+            let totalPrice = 0;
+
+            checkoutCartItems.innerHTML = '';
+            cart.forEach(item => {
+                const product = products.find(p => p.id === item.id);
+                if (product) {
+                    const itemTotal = item.price * item.quantity;
+                    totalPrice += itemTotal;
+                    checkoutCartItems.innerHTML += 
+                        `<li>${item.name} - $${item.price} x ${item.quantity} = $${itemTotal.toFixed(2)}</li>`;
+                }
+            });
+
+            checkoutTotalPriceElem.innerText = `Total Price: $${totalPrice.toFixed(2)}`;
+        }
+
+        function confirmOrder() {
+            const email = document.getElementById('customer-email').value;
+            if (email) {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.forEach(item => {
+                    const product = products.find(p => p.id === item.id);
+                    if (product) {
+                        sendEmail(product.email, 'New Order Received', `Order details: ${JSON.stringify(cart)}`);
+                    }
+                });
+
+                localStorage.removeItem('cart');
+                window.location.href = 'thankyou.html'; // Redirect to the Thank You page
+            } else {
+                alert('Please enter your email.');
+            }
+        }
+
+        function sendEmail(to, subject, body) {
+            // This is a placeholder. You need to use an actual email service here.
+            console.log(`Email to: ${to}\nSubject: ${subject}\nBody: ${body}`);
+        }
+
+        // Initialize checkout page
+        renderCart();
+    </script>
+</body>
+</html>
